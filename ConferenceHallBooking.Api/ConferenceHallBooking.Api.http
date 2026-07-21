@@ -1,0 +1,6 @@
+@ConferenceHallBooking.Api_HostAddress = http://localhost:5097
+
+GET {{ConferenceHallBooking.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
