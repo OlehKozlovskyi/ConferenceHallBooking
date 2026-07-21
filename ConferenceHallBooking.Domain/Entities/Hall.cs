@@ -10,7 +10,9 @@
 
         public decimal PricePerHour { get; set; }
 
+        public ICollection<Amenities> Amenities { get; set; } = [];
+
         // Navigation property for bookings
-        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+        public ICollection<Booking> Bookings { get; set; } = [];
     }
 }

@@ -9,11 +9,18 @@ namespace ConferenceHallBooking.Infrastructure.Extensions
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            string databaseConnectionString = "Host = localhost; Database = hall_booking; Username = root; Password = 1111";
+            services.AddEntityFrameworkPgSql();
+
+            return services;
+        }
+
+        private static IServiceCollection AddEntityFrameworkPgSql(this IServiceCollection services)
+        {
+            string databaseConnectionString = "Host = localhost; Database = hall-booking_db; Username = root; Password = 1111";
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString(databaseConnectionString)));
-            // Add infrastructure services here
+                options.UseNpgsql(databaseConnectionString));
+
             return services;
         }
     }

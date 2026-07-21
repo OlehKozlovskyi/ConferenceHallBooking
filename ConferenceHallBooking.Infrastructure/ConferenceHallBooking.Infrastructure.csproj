@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConferenceHallBooking.Api\ConferenceHallBooking.Api.csproj" />
+    <ProjectReference Include="..\ConferenceHallBooking.Application\ConferenceHallBooking.Application.csproj" />
   </ItemGroup>
 
 </Project>

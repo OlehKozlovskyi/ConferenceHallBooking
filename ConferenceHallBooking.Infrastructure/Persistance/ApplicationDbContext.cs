@@ -33,6 +33,8 @@ namespace ConferenceHallBooking.Infrastructure.Persistance
                 .IsRequired();
 
                 entity.HasMany(h => h.Bookings);
+
+                entity.HasMany(h => h.Amenities);
             });
 
             modelBuilder.Entity<Booking>(entity =>
@@ -66,6 +68,10 @@ namespace ConferenceHallBooking.Infrastructure.Persistance
 
                 entity.Property(a => a.Price)
                 .IsRequired();
+
+                entity.HasOne(a => a.Hall)
+                .WithMany(h => h.Amenities)
+                .HasForeignKey(a => a.HallId);
             });
         }
     }

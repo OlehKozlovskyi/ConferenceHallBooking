@@ -1,8 +1,13 @@
 using ConferenceHallBooking.Api.Extensions;
+using ConferenceHallBooking.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
+
+var configuration = builder.Configuration;
+
+services.AddInfrastructure(configuration);
 
 services.AddSwagger();
 
