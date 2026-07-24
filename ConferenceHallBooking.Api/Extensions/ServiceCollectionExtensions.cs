@@ -1,9 +1,38 @@
-﻿using Microsoft.OpenApi;
+﻿using AutoMapper;
+using ConferenceHallBooking.Application.Mapping;
+using FluentValidation;
+using Microsoft.OpenApi;
 
 namespace ConferenceHallBooking.Api.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddAutomapper(this IServiceCollection services)
+        {
+            services.AddSingleton(sp =>
+            {
+                var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile<CreateConferenceHallProfile>();
+                    cfg.AddProfile<ConferenceHallResponseProfile>();
+
+                    cfg.AllowNullCollections = true;
+                }, loggerFactory);
+
+                config.AssertConfigurationIsValid();
+                return config.CreateMapper();
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddValidators(this IServiceCollection services)
+        {
+            services.AddValidatorsFromAssemblyContaining<CreateConferenceHallProfile>();
+            return services;
+        }
+
         public static IServiceCollection AddSwagger(this IServiceCollection services)
         {
             services.AddEndpointsApiExplorer();
