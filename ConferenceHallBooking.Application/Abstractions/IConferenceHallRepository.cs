@@ -11,5 +11,7 @@ namespace ConferenceHallBooking.Application.Abstractions
         Task<Hall?> GetConferenceHallByIdAsNoTrackingAsync(Guid hallId, CancellationToken ct = default);
         Task<Hall?> GetConferenceHallByIdAsync(Guid hallId, CancellationToken ct = default);
         Task<bool> TryDeleteConferenceHallAsync(Guid hallId, CancellationToken ct = default);
+        void RemoveAmenities(IEnumerable<Amenities> amenities);
+        Task<IEnumerable<Hall>> GetAvailableConferenceHallsAsync(DateTime requestedStart, DateTime requestedEnd, int requiredCapacity, CancellationToken ct = default);
     }
 }

@@ -17,6 +17,7 @@ namespace ConferenceHallBooking.Infrastructure.Repositories
 
         public async Task<Hall?> GetConferenceHallByIdAsync(Guid hallId, CancellationToken ct = default)
             => await dbContext.Halls
+            .Include(h => h.Amenities)
             .FirstOrDefaultAsync(h => h.Id == hallId, ct);
 
         public async Task<List<Hall>> GetAllConferenceHallsAsync(CancellationToken ct = default)
@@ -25,6 +26,7 @@ namespace ConferenceHallBooking.Infrastructure.Repositories
         public async Task<Hall?> GetConferenceHallByIdAsNoTrackingAsync(Guid hallId, CancellationToken ct = default)
             => await dbContext.Halls
             .AsNoTracking()
+            .Include(h => h.Amenities)
             .FirstOrDefaultAsync(h => h.Id == hallId, ct);
 
         public async Task<Hall> ApplyUpdateConferenceHallAsync(Guid hallId, CancellationToken ct = default)
@@ -51,5 +53,24 @@ namespace ConferenceHallBooking.Infrastructure.Repositories
 
             return result.Entity;
         }
+
+        public async Task<IEnumerable<Hall>> GetAvailableConferenceHallsAsync(
+            DateTime requestedStart,
+            DateTime requestedEnd,
+            int requiredCapacity,
+            CancellationToken ct = default)
+        {
+            var result = await dbContext.Halls
+                .Include(h => h.Amenities)
+                .Where(h => h.Capacity >= requiredCapacity)
+                .Where(h => h.Bookings.Any(b =>
+                    b.StartTime < requestedStart &&
+                    b.EndTime > requestedEnd))
+                .ToListAsync(ct);
+
+            return result;
+        }
+
+        public void RemoveAmenities(IEnumerable<Amenities> amenities) => dbContext.Amenities.RemoveRange(amenities);
     }
 }
