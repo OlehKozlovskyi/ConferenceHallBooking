@@ -1,4 +1,4 @@
-﻿using ConferenceHallBooking.Application.Abstractions;
+﻿using ConferenceHallBooking.Application.Abstractions.IRepository;
 using ConferenceHallBooking.Domain.Entitities;
 using ConferenceHallBooking.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
@@ -44,14 +44,6 @@ namespace ConferenceHallBooking.Infrastructure.Repositories
                 .ExecuteDeleteAsync(ct);
 
             return rowsAffected > 0;
-        }
-
-        public async Task<Booking> CreateBookingAsync(Booking newBooking, CancellationToken ct = default)
-        {
-            var result = await dbContext.Bookings.AddAsync(newBooking);
-            await dbContext.SaveChangesAsync(ct);
-
-            return result.Entity;
         }
 
         public async Task<IEnumerable<Hall>> GetAvailableConferenceHallsAsync(

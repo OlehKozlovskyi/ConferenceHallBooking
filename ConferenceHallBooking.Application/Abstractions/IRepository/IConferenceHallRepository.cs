@@ -1,12 +1,11 @@
 ﻿using ConferenceHallBooking.Domain.Entitities;
 
-namespace ConferenceHallBooking.Application.Abstractions
+namespace ConferenceHallBooking.Application.Abstractions.IRepository
 {
     public interface IConferenceHallRepository
     {
         Task<Hall> AddConferenceHallAsync(Hall newHall, CancellationToken ct = default);
         Task<Hall> ApplyUpdateConferenceHallAsync(Guid hallId, CancellationToken ct = default);
-        Task<Booking> CreateBookingAsync(Booking newBooking, CancellationToken ct = default);
         Task<List<Hall>> GetAllConferenceHallsAsync(CancellationToken ct = default);
         Task<Hall?> GetConferenceHallByIdAsNoTrackingAsync(Guid hallId, CancellationToken ct = default);
         Task<Hall?> GetConferenceHallByIdAsync(Guid hallId, CancellationToken ct = default);

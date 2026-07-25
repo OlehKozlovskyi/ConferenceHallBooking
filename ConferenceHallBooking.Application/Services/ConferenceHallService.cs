@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using ConferenceHallBooking.Application.Abstractions;
+using ConferenceHallBooking.Application.Abstractions.IRepository;
+using ConferenceHallBooking.Application.Abstractions.IServices;
 using ConferenceHallBooking.Application.DTOs.Requests;
 using ConferenceHallBooking.Application.DTOs.Responses;
 using ConferenceHallBooking.Domain.Entitities;
@@ -8,7 +9,7 @@ namespace ConferenceHallBooking.Application.Services
 {
     public class ConferenceHallService(
         IConferenceHallRepository conferenceHallRepository,
-        IMapper mapper)
+        IMapper mapper) : IConferenceHallService
     {
         public async Task<ConferenceHallResponse> CreateConferanceHallAsync(CreateConferenceHallRequest request, CancellationToken ct = default)
         {
