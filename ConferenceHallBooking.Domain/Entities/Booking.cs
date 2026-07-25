@@ -10,8 +10,6 @@
 
         public DateTime EndTime { get; set; }
 
-        public int NumberOfAttendees { get; set; }
-
         public decimal TotalPrice { get; set; }
 
         public Hall Hall { get; set; } = null!;

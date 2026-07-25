@@ -4,6 +4,6 @@ namespace ConferenceHallBooking.Application.Abstractions.IRepository
 {
     public interface IBookingRepository
     {
-        Task<Booking> CreateBookingAsync(Booking newBooking, CancellationToken ct = default);
+        Task<Booking> AddBookingAsync(Booking newBooking, CancellationToken ct = default);
     }
 }

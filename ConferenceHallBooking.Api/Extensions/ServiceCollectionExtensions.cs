@@ -1,5 +1,12 @@
 ﻿using AutoMapper;
+using ConferenceHallBooking.Application.Abstractions.IRepository;
+using ConferenceHallBooking.Application.Abstractions.IServices;
+using ConferenceHallBooking.Application.Abstractions.Other;
+using ConferenceHallBooking.Application.Helpers;
 using ConferenceHallBooking.Application.Mapping;
+using ConferenceHallBooking.Application.Services;
+using ConferenceHallBooking.Application.Strategies;
+using ConferenceHallBooking.Infrastructure.Repositories;
 using FluentValidation;
 using Microsoft.OpenApi;
 
@@ -7,6 +14,26 @@ namespace ConferenceHallBooking.Api.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddCustomServices(this IServiceCollection services)
+        {
+            //Repositories
+            services.AddScoped<IBookingRepository, BookingRepository>();
+            services.AddScoped<IConferenceHallRepository, ConferenceHallRepository>();
+
+            //Services
+            services.AddScoped<IConferenceHallService, ConferenceHallService>();
+            services.AddScoped<IBookingService, BookingService>();
+
+            //Other
+            services.AddScoped<IBookingPricingCalculator, BookingPricingCalculator>();
+            services.AddScoped<IPricingStrategy, StandardHoursPricingStrategy>();
+            services.AddScoped<IPricingStrategy, PeakHoursSurchargePricingStrategy>();
+            services.AddScoped<IPricingStrategy, MorningDiscountPricingStrategy>();
+            services.AddScoped<IPricingStrategy, EveningDiscountPricingStrategy>();
+
+            return services;
+        }
+
         public static IServiceCollection AddAutomapper(this IServiceCollection services)
         {
             services.AddSingleton(sp =>
@@ -16,6 +43,8 @@ namespace ConferenceHallBooking.Api.Extensions
                 {
                     cfg.AddProfile<CreateConferenceHallProfile>();
                     cfg.AddProfile<ConferenceHallResponseProfile>();
+                    cfg.AddProfile<CreateBookingProfile>();
+                    cfg.AddProfile<BookingResponseProfile>();
 
                     cfg.AllowNullCollections = true;
                 }, loggerFactory);

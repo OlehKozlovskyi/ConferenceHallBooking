@@ -6,7 +6,7 @@ namespace ConferenceHallBooking.Infrastructure.Repositories
 {
     public class BookingRepository(ApplicationDbContext dbContext) : IBookingRepository
     {
-        public async Task<Booking> CreateBookingAsync(Booking newBooking, CancellationToken ct = default)
+        public async Task<Booking> AddBookingAsync(Booking newBooking, CancellationToken ct = default)
         {
             var result = await dbContext.Bookings.AddAsync(newBooking);
             await dbContext.SaveChangesAsync(ct);
