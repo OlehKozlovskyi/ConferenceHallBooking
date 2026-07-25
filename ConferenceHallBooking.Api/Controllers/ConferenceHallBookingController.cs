@@ -6,12 +6,23 @@ namespace ConferenceHallBooking.Api.Controllers
 {
     [ApiController]
     [Route("api/conference-halls")]
-    public class ConferenceHallBookingController(IConferenceHallService conferenceHallService) : ControllerBase
+    public class ConferenceHallBookingController : ControllerBase
     {
+        private readonly IConferenceHallService _conferenceHallService;
+        private readonly IBookingService _bookingService;
+
+        public ConferenceHallBookingController(
+            IConferenceHallService conferenceHallService,
+            IBookingService bookingService)
+        {
+            _conferenceHallService = conferenceHallService;
+            _bookingService = bookingService;
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateConferenceHall(CreateConferenceHallRequest request, CancellationToken ct = default)
         {
-            var response = await conferenceHallService.CreateConferanceHallAsync(request, ct);
+            var response = await _conferenceHallService.CreateConferanceHallAsync(request, ct);
 
             return Ok(response);
         }
@@ -19,7 +30,7 @@ namespace ConferenceHallBooking.Api.Controllers
         [HttpPut("{hallId:guid}")]
         public async Task<IActionResult> UpdateConferenceHall(UpdateConferenceHallRequest request, CancellationToken ct = default)
         {
-            var response = await conferenceHallService.UpdateConferenceHallAsync(request, ct);
+            var response = await _conferenceHallService.UpdateConferenceHallAsync(request, ct);
 
             return Ok(response);
         }
@@ -27,7 +38,7 @@ namespace ConferenceHallBooking.Api.Controllers
         [HttpDelete("{hallId:guid}")]
         public async Task<IActionResult> DeleteConferenceHall(Guid hallId, CancellationToken ct = default)
         {
-            await conferenceHallService.DeleteConferenceHallAsync(hallId, ct);
+            await _conferenceHallService.DeleteConferenceHallAsync(hallId, ct);
 
             return NoContent();
         }
@@ -39,9 +50,16 @@ namespace ConferenceHallBooking.Api.Controllers
             [FromQuery] int requiredCapicity,
             CancellationToken ct = default)
         {
-            var reponse = await conferenceHallService.SearchAvailableConferenceHallsAsync(startDate, endDate, requiredCapicity, ct);
+            var reponse = await _conferenceHallService.SearchAvailableConferenceHallsAsync(startDate, endDate, requiredCapicity, ct);
 
             return Ok(reponse);
+        }
+
+        [HttpPost("booking")]
+        public async Task<IActionResult> CreateBooking(CreateBookingRequest request, CancellationToken ct = default)
+        {
+            var response = await _bookingService.CreateBookingAsync(request, ct);
+            return Ok(response);
         }
     }
 }

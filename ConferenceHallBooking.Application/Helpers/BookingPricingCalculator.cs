@@ -7,8 +7,8 @@ namespace ConferenceHallBooking.Application.Helpers
         public decimal CalculateBookingPrice(DateTime startTime, DateTime endTime, decimal basePrice)
         {
             var totalPrice = 0m;
-            var segmentStartTime = startTime;
-            var segmentEndTime = endTime;
+            var segmentStartTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, startTime.Hour, 0, 0);
+            var segmentEndTime = new DateTime(endTime.Year, endTime.Month, endTime.Day, endTime.Hour, 0, 0); ;
 
             while (segmentStartTime < segmentEndTime)
             {

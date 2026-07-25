@@ -4,7 +4,7 @@
     {
         public Guid BookingId { get; init; }
 
-        public string ConferenceHallName { get; init; } = string.Empty;
+        public Guid ConferenceHallId { get; init; }
 
         public DateTime StartTime { get; init; }
 

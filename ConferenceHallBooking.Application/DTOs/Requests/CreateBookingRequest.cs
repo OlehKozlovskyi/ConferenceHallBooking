@@ -6,7 +6,7 @@
 
         public DateTime StartDate { get; init; }
 
-        public TimeSpan DurationsInHours { get; init; }
+        public double DurationsInHours { get; init; }
 
         public ICollection<Guid> AmenityIds { get; init; } = [];
     }

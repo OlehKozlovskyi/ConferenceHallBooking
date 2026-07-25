@@ -12,7 +12,9 @@ namespace ConferenceHallBooking.Application.Mapping
                 .ForMember(dest => dest.Id, h => h.Ignore())
                 .ForMember(dest => dest.Name, h => h.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Capacity, h => h.MapFrom(src => src.Capacity))
-                .ForMember(dest => dest.Amenities, h => h.MapFrom(src => src.Amenities));
+                .ForMember(dest => dest.PricePerHour, h => h.MapFrom(src => src.BasePricePerHour))
+                .ForMember(dest => dest.Amenities, h => h.MapFrom(src => src.Amenities))
+                .ForMember(dest => dest.Bookings, h => h.Ignore());
 
             CreateMap<AmenitiesRequest, Amenities>()
                 .ForMember(dest => dest.Id, a => a.Ignore())

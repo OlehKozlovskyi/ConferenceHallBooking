@@ -10,7 +10,7 @@ namespace ConferenceHallBooking.Application.Mapping
         {
             CreateMap<Booking, BookingResponse>()
                 .ForMember(dest => dest.BookingId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.ConferenceHallName, opt => opt.MapFrom(src => src.Hall.Name))
+                .ForMember(dest => dest.ConferenceHallId, opt => opt.MapFrom(src => src.HallId))
                 .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => src.StartTime))
                 .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.EndTime))
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice));

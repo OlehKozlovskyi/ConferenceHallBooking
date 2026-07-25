@@ -8,7 +8,8 @@ namespace ConferenceHallBooking.Application.Mapping
     {
         public ConferenceHallResponseProfile()
         {
-            CreateMap<Hall, ConferenceHallResponse>();
+            CreateMap<Hall, ConferenceHallResponse>()
+                .ForMember(dest => dest.BasePricePerHour, h => h.MapFrom(src => src.PricePerHour));
 
             CreateMap<Amenities, AmentitiesResponse>();
         }

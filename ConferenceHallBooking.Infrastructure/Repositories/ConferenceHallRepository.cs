@@ -55,9 +55,9 @@ namespace ConferenceHallBooking.Infrastructure.Repositories
             var result = await dbContext.Halls
                 .Include(h => h.Amenities)
                 .Where(h => h.Capacity >= requiredCapacity)
-                .Where(h => h.Bookings.Any(b =>
-                    b.StartTime < requestedStart &&
-                    b.EndTime > requestedEnd))
+                .Where(h => !h.Bookings.Any(b =>
+                    b.StartTime < requestedEnd &&
+                    b.EndTime > requestedStart))
                 .ToListAsync(ct);
 
             return result;

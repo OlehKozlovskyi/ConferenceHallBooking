@@ -40,6 +40,29 @@ namespace ConferenceHallBooking.Application.Validators
                         .WithMessage("Amenity price must be greater than or equal to 0.");
                 }
             }
+
+            public class UpdateConferenceHallRequestValidator : AbstractValidator<UpdateConferenceHallRequest>
+            {
+                public UpdateConferenceHallRequestValidator()
+                {
+                    RuleFor(x => x.Id)
+                        .NotEmpty()
+                        .WithMessage("Id is required.");
+                    RuleFor(x => x.Name)
+                        .NotEmpty()
+                        .WithMessage("Name is required.")
+                        .MaximumLength(100)
+                        .WithMessage("Name cannot exceed 100 characters.");
+                    RuleFor(x => x.Capacity)
+                        .GreaterThan(0)
+                        .WithMessage("Capacity must be greater than 0.");
+                    RuleFor(x => x.BasePricePerHour)
+                        .GreaterThanOrEqualTo(0)
+                        .WithMessage("Base price per hour must be greater than or equal to 0.");
+                    RuleForEach(x => x.Amenities)
+                        .SetValidator(new AmenitiesRequestValidator());
+                }
+            }
         }
     }
 }

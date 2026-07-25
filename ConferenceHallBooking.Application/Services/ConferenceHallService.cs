@@ -62,11 +62,14 @@ namespace ConferenceHallBooking.Application.Services
             int requiredCapacity,
             CancellationToken ct = default)
         {
+            var utcStart = DateTime.SpecifyKind(startDate, DateTimeKind.Utc);
+            var utcEnd = DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
+
             //Implement validation of request
             if (startDate >= endDate)
                 throw new Exception("Start date must be earlier than end date");
 
-            var availableHalls = await conferenceHallRepository.GetAvailableConferenceHallsAsync(startDate, endDate, requiredCapacity, ct);
+            var availableHalls = await conferenceHallRepository.GetAvailableConferenceHallsAsync(utcStart, utcEnd, requiredCapacity, ct);
             var response = mapper.Map<IEnumerable<ConferenceHallResponse>>(availableHalls);
 
             return response;

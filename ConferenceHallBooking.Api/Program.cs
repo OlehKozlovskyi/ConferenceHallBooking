@@ -1,4 +1,5 @@
 using ConferenceHallBooking.Api.Extensions;
+using ConferenceHallBooking.Api.Filters;
 using ConferenceHallBooking.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,12 @@ services.AddValidators();
 
 services.AddSwagger();
 
-services.AddControllers();
+services.AddCustomServices();
+
+services.AddControllers(options =>
+{
+    options.Filters.Add<AutoValidationFilter>();
+});
 
 var app = builder.Build();
 
